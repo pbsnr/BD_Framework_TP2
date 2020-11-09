@@ -21,6 +21,11 @@ public class AppDriver {
             programDriver.addClass("nbr_trees_species", NbrTreesSpecies.class,
                     "A map/reduce program that lists the number of trees by species in Paris.");
 
+            programDriver.addClass("sort_by_trees_height", SortByTreesHeight.class,
+                    "A map/reduce program that sort the trees by height from smallest to highest");
+
+
+
 
 
             exitCode = programDriver.run(argv);
