@@ -1,17 +1,15 @@
 package com.opstty.mapper;
 
-        import org.apache.hadoop.io.IntWritable;
-        import org.apache.hadoop.io.LongWritable;
-        import org.apache.hadoop.io.Text;
-        import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
 
-        import java.io.IOException;
-        import java.util.StringTokenizer;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
-public class DistrictContainingTreesMapper extends Mapper<Object, Text, Text, IntWritable> {
+public class ExistingSpeciesMapper extends Mapper<Object, Text, Text, IntWritable> {
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
-    private Text word_bis = new Text();
 
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         try {
@@ -21,7 +19,7 @@ public class DistrictContainingTreesMapper extends Mapper<Object, Text, Text, In
                 StringTokenizer itr = new StringTokenizer(value.toString(), "\n");
                 while (itr.hasMoreTokens()) {
 
-                    word.set(itr.nextToken().split(";")[1]);
+                    word.set(itr.nextToken().split(";")[3]);
                     context.write(word, one);
                 }
             }
