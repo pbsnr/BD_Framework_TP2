@@ -1,31 +1,36 @@
 package com.opstty.job;
 
-import com.opstty.mapper.ExistingSpeciesMapper;
-import com.opstty.mapper.HighestTreePerSpecieMapper;
-import com.opstty.reducer.ExistingSpeciesReducer;
-import com.opstty.reducer.HighestTreePerSpecieReducer;
+import com.opstty.comparator.SortByHeightComparator;
+import com.opstty.comparator.SortByHeightKeyComparator;
+import com.opstty.mapper.NbrTreesSpeciesMapper;
+import com.opstty.mapper.SortByTreesHeightMapper;
+import com.opstty.mapper.WhereOldestMapper;
+import com.opstty.reducer.NbrTreesSpeciesReducer;
+import com.opstty.reducer.SortByTreesHeightReducer;
+import com.opstty.reducer.WhereOldestReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-public class HighestTreePerSpecie {
+public class WhereOldest {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         if (otherArgs.length < 2) {
-            System.err.println("Usage: highest_tree_per_specie <in> [<in>...] <out>");
+            System.err.println("Usage: nbr_trees_species <in> [<in>...] <out>");
             System.exit(2);
         }
-        Job job = Job.getInstance(conf, "highest_tree_per_specie");
-        job.setJarByClass(HighestTreePerSpecie.class);
-        job.setMapperClass(HighestTreePerSpecieMapper.class);
-        job.setCombinerClass(HighestTreePerSpecieReducer.class);
-        job.setReducerClass(HighestTreePerSpecieReducer.class);
+        Job job = Job.getInstance(conf, "nbr_trees_species");
+        job.setJarByClass(WhereOldest.class);
+        job.setMapperClass(WhereOldestMapper.class);
+        job.setCombinerClass(WhereOldestReducer.class);
+        job.setReducerClass(WhereOldestReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         for (int i = 0; i < otherArgs.length - 1; ++i) {
