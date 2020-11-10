@@ -23,10 +23,10 @@ public class WhereOldest {
         Configuration conf = new Configuration();
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         if (otherArgs.length < 2) {
-            System.err.println("Usage: nbr_trees_species <in> [<in>...] <out>");
+            System.err.println("Usage: where_oldest <in> [<in>...] <out>");
             System.exit(2);
         }
-        Job job = Job.getInstance(conf, "nbr_trees_species");
+        Job job = Job.getInstance(conf, "where_oldest");
         job.setJarByClass(WhereOldest.class);
         job.setMapperClass(WhereOldestMapper.class);
         job.setCombinerClass(WhereOldestReducer.class);

@@ -9,10 +9,8 @@ import java.io.IOException;
 
 public class SortByTreesHeightReducer extends Reducer<SortByHeightKeyComparator, NullWritable, Text, NullWritable> {
 
-    private Text result;
 
     public void reduce(SortByHeightKeyComparator keyH, Iterable<NullWritable> values, Context context) throws IOException, InterruptedException {
-        result = new Text (String.format("%s %.3f", keyH.geopoint, keyH.height));
-        context.write(result,NullWritable.get());
+        context.write(new Text (keyH.geopoint + " " + keyH.height), NullWritable.get());
     }
 }
